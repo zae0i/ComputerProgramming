@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "City.h"
 #include <fstream>
 #include <stdexcept>
@@ -64,6 +65,12 @@ void SmartCity::loadFromFile(const std::string& filename) {
 SmartCity SmartCity::operator+(const SmartCity& other) const {
     SmartCity combinedCity(this->name + " & " + other.name, this->population + other.population);
     combinedCity.features = this->features;
-    combinedCity.features.insert(combinedCity.features.end(), other.features.begin(), other.features.end());
+
+    // 다른 도시의 스마트 기능 병합 (중복 제거)
+    for (const auto& feature : other.features) {
+        if (std::find(combinedCity.features.begin(), combinedCity.features.end(), feature) == combinedCity.features.end()) {
+            combinedCity.features.push_back(feature);
+        }
+    }
     return combinedCity;
 }

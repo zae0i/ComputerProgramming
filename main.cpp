@@ -3,29 +3,31 @@
 
 int main() {
     try {
-        // SmartCity 객체 생성
+        // City 1 생성
         SmartCity city1("Futureville", 500000);
         city1.addFeature("Automated Traffic Control");
         city1.addFeature("Smart Energy Management");
+        city1.addFeature("AI-assisted Healthcare");
 
+        // City 1 정보 출력
+        std::cout << "Initial City Information:\n";
+        city1.displayInfo();
+
+        // City 2 생성
         SmartCity city2("TechTown", 300000);
         city2.addFeature("AI-assisted Healthcare");
         city2.addFeature("Green Energy Systems");
 
-        // 도시 비교
-        if (city1 > city2) {
-            std::cout << city1.name << " is larger than " << city2.name << ".\n";
-        }
-        else {
-            std::cout << city2.name << " is larger than " << city1.name << ".\n";
-        }
+        // City 2 정보 출력
+        std::cout << "\nCity 2 Information:\n";
+        city2.displayInfo();
 
-        // 도시 병합
+        // 병합된 도시 정보 출력
         SmartCity combinedCity = city1 + city2;
         std::cout << "\nCombined City Information:\n";
         combinedCity.displayInfo();
 
-        // 파일 입출력 테스트
+        // 파일에 저장 및 불러오기 테스트
         const std::string filename = "city_data.txt";
         combinedCity.saveToFile(filename);
 

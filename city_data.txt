@@ -1,5 +1,6 @@
-Futureville
-500000
+Futureville & TechTown
+800000
 Automated Traffic Control
 Smart Energy Management
 AI-assisted Healthcare
+Green Energy Systems
