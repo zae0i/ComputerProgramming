@@ -1,45 +1,66 @@
-#include "City.h"
+#include "SmartCity.h"
+#include "FileHandler.h"
 #include <iostream>
+#include <exception>
 
 int main() {
     try {
-        // City 1 생성
+        // === 조건 1: 추상 클래스와 가상 함수 테스트 ===
+        std::cout << "=== Test 1: Abstract Class and Virtual Function ===" << std::endl;
         SmartCity city1("Futureville", 500000);
         city1.addFeature("Automated Traffic Control");
         city1.addFeature("Smart Energy Management");
-        city1.addFeature("AI-assisted Healthcare");
-
-        // City 1 정보 출력
-        std::cout << "Initial City Information:\n";
         city1.displayInfo();
+        std::cout << std::endl;
 
-        // City 2 생성
+        // === 조건 2: 연산자 중복 테스트 ===
+        std::cout << "=== Test 2: Operator Overloading ===" << std::endl;
         SmartCity city2("TechTown", 300000);
         city2.addFeature("AI-assisted Healthcare");
         city2.addFeature("Green Energy Systems");
 
-        // City 2 정보 출력
-        std::cout << "\nCity 2 Information:\n";
-        city2.displayInfo();
+        if (city1 > city2) {
+            std::cout << city1.getName() << " is larger than " << city2.getName() << ".\n";
+        }
+        else {
+            std::cout << city2.getName() << " is larger than " << city1.getName() << ".\n";
+        }
 
-        // 병합된 도시 정보 출력
         SmartCity combinedCity = city1 + city2;
-        std::cout << "\nCombined City Information:\n";
+        std::cout << "\nCombined City Information:" << std::endl;
         combinedCity.displayInfo();
+        std::cout << std::endl;
 
-        // 파일에 저장 및 불러오기 테스트
+        // === 조건 3: 파일 입출력 테스트 ===
+        std::cout << "=== Test 3: File Input and Output ===" << std::endl;
         const std::string filename = "city_data.txt";
-        combinedCity.saveToFile(filename);
+        saveCityToFile(combinedCity, filename);
 
-        SmartCity loadedCity("", 0);
-        loadedCity.loadFromFile(filename);
-
-        std::cout << "\nLoaded City Information:\n";
+        SmartCity loadedCity = loadCityFromFile(filename);
+        std::cout << "Loaded City Information:" << std::endl;
         loadedCity.displayInfo();
+        std::cout << std::endl;
+
+        // === 조건 4: 객체 배열 활용 테스트 ===
+        std::cout << "=== Test 4: Using Object Array ===" << std::endl;
+        city1.addFeature("Smart Parking Systems");
+        city1.displayInfo();
+        std::cout << std::endl;
+
+        // === 조건 5: 예외 처리 테스트 ===
+        std::cout << "=== Test 5: Exception Handling ===" << std::endl;
+        try {
+            SmartCity invalidCity("", 0);
+            invalidCity.loadFromFile("non_existent_file.txt");
+        }
+        catch (const std::exception& e) {
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
+        std::cout << std::endl;
 
     }
     catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "Unexpected Error: " << e.what() << std::endl;
     }
 
     return 0;
